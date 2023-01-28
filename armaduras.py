@@ -8,7 +8,6 @@ class object():
         self.escuadra =escuadra
         self.armadura = armadura
 
-
 #Crea una clase llamada armaduras.py que tenga los atributos nombre y rango
 class armaduras(object):
     def __init__(self, nombre, rango):
