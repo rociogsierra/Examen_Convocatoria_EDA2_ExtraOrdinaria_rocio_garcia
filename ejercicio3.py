@@ -1,5 +1,6 @@
 
 #Creación
+#copio la primera parte de la pregunta anterior
 class object():
     def __init__(self, codigo, cohoerte, siglo, escuadra, armadura):
         self.codigo = codigo
@@ -27,14 +28,20 @@ class armaduras(object):
         return codigo_legion + "-" + str(id_cohoerte) + str(id_siglo) + str(id_escuadra) + str(numero_armadura)
 
 #Experimentación
-#Crea una lista con un numero arbitrario de objetos tipo armaduras
+
+    #Junto al método init y calificación, sobrescriba el método especial de Python, el método str
+    #Implementa el método str y haz que muestre el nombre y el rango de las armaduras
+    def __str__(self):
+        return "Stormtrooper[nombre=" + self.nombre + ", rango=" + self.rango + "]"
+
+#Crea una lista con un numero arbitrario de objetos tipo Armaduras.
 armadura1 = armaduras("armadura 1", "Capitan")
 armadura2 = armaduras("armadura 2", "Cabo")
 armadura3 = armaduras("armadura 3", "Cabo")
 armas = [armadura1, armadura2, armadura3]
 
-
-#Recorre los elementos de la lista, y prueba a ejecutar el método calificación de cada objeto que has creado
+#Recorre los elementos de la lista, y utiliza el método print de esos objetos para visualizar por pantalla la información del str
 for arma in armas:
-    cal = arma.calificacion("MK", 8, 8, 8, 8)
-    print(cal)
+    print(arma)
+    
+
