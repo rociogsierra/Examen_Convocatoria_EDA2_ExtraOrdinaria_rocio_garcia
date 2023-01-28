@@ -85,7 +85,7 @@ class Grafo:
             resultado.append((self.vertice_a_nombre[u], self.vertice_a_nombre[v], w))
         return resultado
     
-def definitivo():
+def definitivo2():
     grafo = Grafo(5)
     #parte grafo -> Tierra
     grafo.agregar_arista("Tierra", "Vormir", 43)

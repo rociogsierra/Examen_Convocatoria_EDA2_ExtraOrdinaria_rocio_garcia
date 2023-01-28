@@ -3,14 +3,17 @@ import sys
 
 #clase grafo
 class Grafo:
+    #constructor del grafo
     def __init__(self):
         self.nodos = set()
         self.aristas = {}
         self.distancias = {}
-
+    
+    #agregar nodos
     def agregar_nodo(self, valor):
         self.nodos.add(valor)
-
+    
+    #agregar aristas
     def agregar_arista(self, nodo_origen, nodo_destino, distancia):
         if nodo_origen not in self.aristas:
             self.aristas[nodo_origen] = [nodo_destino]
@@ -23,9 +26,10 @@ class Grafo:
         self.distancias[(nodo_origen, nodo_destino)] = distancia
         self.distancias[(nodo_destino, nodo_origen)] = distancia
 
+    #definición djkistra
     def dijkstra(self, inicio, fin):
-        #rutas_mas_cortas es un diccionario de nodos
-        #que tiene por valor una tupla de (nodo previo, peso)
+        
+        #diccionario de nodos
         rutas_mas_cortas = {inicio: (None, 0)}
         nodo_actual = inicio
         visitados = set()
@@ -47,7 +51,55 @@ class Grafo:
             siguientes_destinos = {nodo: rutas_mas_cortas[nodo] for nodo in rutas_mas_cortas if nodo not in visitados}
             if not siguientes_destinos:
                 return "Ruta No Posible"
-                # el siguiente nodo es el destino con el menor peso
+                #destino con el menor peso
             nodo_actual = min(siguientes_destinos, key=lambda k: siguientes_destinos[k][1])
-            
+
+        #lista ruta
+        ruta = []
+        while nodo_actual is not None:
+            ruta.append(nodo_actual)
+            siguiente_nodo = rutas_mas_cortas[nodo_actual][0]
+            nodo_actual = siguiente_nodo
+        #lista ruta inversa
+        ruta = ruta[::-1]
+
+        #pesos de las aristas
+        for i in range(len(ruta) - 1):
+            print(f"{ruta[i]} -> {ruta[i+1]}: {self.distancias[(ruta[i], ruta[i+1])]}")
+        
+        #costo final de la ruta + ruta más corta
+        return ruta, rutas_mas_cortas[fin][1]
+
+#grafo definitivo
+
+def definitivo():    
+    grafo = Grafo()
+    planetas = ["Tierra", "Knowhere", "Zen-Whoberi", "Vomir", "Titán", "Nidavellir"]
+    for planeta in planetas:
+        grafo.agregar_nodo(planetas)
+    
+    #parte grafo -> Tierra
+    grafo.agregar_arista("Tierra", "Vormir", 43)
+    grafo.agregar_arista("Tierra", "Knowhere", 177)
+    grafo.agregar_arista("Tierra", "Titan", 193)
+    grafo.agregar_arista("Tierra", "Zen-Whoberi", 222)
+    #parte grafo -> Vormir
+    grafo.agregar_arista("Vormir", "Titan", 180)
+    grafo.agregar_arista("Vormir", "Knowhere", 20)
+    grafo.agregar_arista("Vorimr", "Zen-Whoberi", 1789)
+    #parte grafo -> Vormir, Zen-Whoberi
+    grafo.agregar_arista("Vormir", "Zen-Whoberi", 43)
+    grafo.agregar_arista("Vormir", "Zen-Whoberi", 177)
+    grafo.agregar_arista("Vormir", "Zen-Whoberi", 193)
+    grafo.agregar_arista("Vormir", "Zen-Whoberi", 222)
+
+#Llamamos a la funcion dijkstra para encontrar el camino critico mas corto
+    ruta_mas_corta1, peso = grafo.dijkstra("Tierra", "Vormir")
+    ruta_mas_corta2, peso2 = grafo.dijkstra("Knowhere","Titán")
+    ruta_mas_corta3, peso3 = grafo.dijkstra("Zen-Whoberi","NidaVellir")
+    print(ruta_mas_corta1)
+    print(ruta_mas_corta2)
+    print(ruta_mas_corta3)
+
+
             
